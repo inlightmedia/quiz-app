@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+
+<span>These are the questions:</span>
+<br /><br />
+<!--<span [*ngFor]="let question of questions">-->
+    <question 
+        num="1"
+        question="{{ questions[0].text }}"
+        answerA="{{ questions[0].options[0].text }}."
+        answerB="{{ questions[0].options[1].text }}."
+        answerC="{{ questions[0].options[2].text }}."
+        correctAnswer="c"
+        showAnswer="{{ showAnswer }}"
+    ></question>
+<!--</span>-->
+<question 
+    num="1"
+    question="{{ questions[0].text }}"
+    answerA="{{ questions[0].options[0].text }}."
+    answerB="{{ questions[0].options[1].text }}."
+    answerC="{{ questions[0].options[2].text }}."
+    correctAnswer="c"
+    showAnswer="{{ showAnswer }}"
+></question>
+<br />
+<question num="2"
+    question="{{ questions[1].text }}"
+    answerA="{{ questions[1].options[0].text }}."
+    answerB="{{ questions[1].options[1].text }}."
+    answerC="{{ questions[1].options[2].text }}."
+    correctAnswer="b"
+    showAnswer="{{ showAnswer }}"
+></question>
+<br />
+<question num="3"
+    question="{{ questions[2].text }}"
+    answerA="{{ questions[2].options[0].text }}."
+    answerB="{{ questions[2].options[1].text }}."
+    answerC="{{ questions[2].options[2].text }}."
+    correctAnswer="a"
+    showAnswer="{{ showAnswer }}"
+></question>
+<br />
+<button *ngIf="!showAnswer" (click)="toggleShowAnswer()">Show Answers</button>
+<button *ngIf="showAnswer" (click)="toggleShowAnswer()">Hide Answers</button>
