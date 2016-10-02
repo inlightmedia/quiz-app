@@ -4,23 +4,30 @@ import { QuizService } from './quiz.service'
 @Component({
     selector: 'quiz-questions',    
     template: `
-    <form #formRef="ngForm">
+    <form #formRef="ngForm" #checkMe>
         <div *ngFor="let question of quizService.questions">
             {{ question.id }}. {{ question.text }}
             <br><br>
             <div *ngFor="let option of question.options">             
-             
-             <input 
-                [disabled] = "showAnswer"                
-                [name]="question.id" 
-                [value]="option.id" 
-                type="radio"
-                [ngModel]
-                (ngModelChange) = "emitChanges(question.id, formRef, $event)"                 
-             />
-             {{ showAnswer }}
-             <label>{{ option.text }}</label>
+                                     
+                <label>                
+                    <input                                                 
+                        [disabled] = "showAnswer"                
+                        [name]="question.id" 
+                        [value]="option.id"
+                         
+                        type="radio"
+                        [ngModel]
+                        (ngModelChange) = "emitChanges(question.id, formRef, $event)"                                                                  
+                    />                    
+                    {{ option.text }}  
+                </label>                
             </div>
+            <span *ngIf="showAnswer">
+                <p [ngClass] = "{'green': question.solution === formRef.value[question.id], 'red': question.solution !== formRef.value[question.id]}">
+                    {{ (question.solution === formRef.value[question.id] )? 'Correct!' : 'Incorrect' }}                    
+                </p>                 
+            </span>
             <br>        
         </div>
     </form>            
@@ -42,32 +49,28 @@ import { QuizService } from './quiz.service'
 export class QuestionComponent {    
     @Input() showAnswer: string; // This is turned into a string when interpolated in the parent component            
     @Output() sendAnswer: any = new EventEmitter();
-            
-    // showAnswer: boolean;    
+                
     quizService;
     formRef;
     form;
+    correctStatus;
+    correctArray;
     constructor(quizService: QuizService){                
         this.quizService = quizService;
         // this.showAnswer = (this.showAnswer == true);
         
     }
-    
+
     emitChanges(q, formRef, event){
         // if (this.showAnswer === 'true') {
             this.formRef = formRef;
             this.formRef.value[q] = event;
-            this.sendAnswer.emit(this.formRef.value);           
-            // console.log(q, formRef.value, ' emitted ', event);
+            this.sendAnswer.emit(this.formRef.value);
+
+            // console.log(q, formRef, ' emitted ', event);
         // }    
     }
-    // get checked() {
-    //     return this.quizService.correct !== null;
-    // }
-    // toggleShowAnswer() {
-    //     showAnswer
-    //     this.showAnswer = !this.showAnswer;        
-    // }
+
 
 } 
 

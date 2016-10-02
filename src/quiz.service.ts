@@ -18,10 +18,7 @@ export class QuizService{
                     this.correct ++;
                 }
             }
-            console.log(this.correct);
-            
-            
-                        
+            console.log(this.correct);                
             
         }
         console.log((this.correct/this.questions.length * 100), '%');
